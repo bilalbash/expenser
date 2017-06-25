@@ -29,6 +29,7 @@ gem 'high_voltage'
 gem 'jquery-rails'
 gem 'pg'
 gem 'slim-rails'
+gem 'tether-rails'
 group :development do
   gem 'better_errors'
   gem 'guard-bundler'
