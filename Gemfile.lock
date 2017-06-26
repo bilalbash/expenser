@@ -271,6 +271,8 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    stroke-seven-rails (1.2.3)
+      railties (>= 3.2)
     temple (0.8.0)
     tether-rails (1.4.0)
       rails (>= 3.1)
@@ -337,6 +339,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   spring-watcher-listen (~> 2.0.0)
+  stroke-seven-rails
   tether-rails
   turbolinks (~> 5)
   tzinfo-data

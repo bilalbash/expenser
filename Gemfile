@@ -30,6 +30,7 @@ gem 'jquery-rails'
 gem 'pg'
 gem 'slim-rails'
 gem 'tether-rails'
+gem 'stroke-seven-rails'
 group :development do
   gem 'better_errors'
   gem 'guard-bundler'
