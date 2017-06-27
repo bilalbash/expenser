@@ -1,11 +1,8 @@
-// import the CSS framework
-// Do not use *= require in Sass or your other stylesheets will not be able to access the Bootstrap mixins and variables.
-@import "bootstrap";
-
 // make all images responsive by default
-img {
-  @extend .img-fluid;
-  margin: 0 auto;
+
+
+main {
+  padding-top: 57px;
 }
 
 section {
@@ -16,7 +13,7 @@ section {
 .col-form-label-lg {
   padding-top: calc(0.75rem - 1px * 2);
   padding-bottom: 0;
-  font-size: 1.25rem;
+  font-size: 1.3rem;
 }
 
 label {

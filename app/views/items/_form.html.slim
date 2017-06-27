@@ -1,0 +1,33 @@
+= content_for :title do
+  = 'New item'
+
+.row.justify-content-center
+  .col-lg-6.col-lg-offset-3.col-md-8.col-sm-10.col-xs-12
+    .panel.panel-default
+      .panel-body
+
+        = form_for [@category, @item] do |f|
+          - if @item.errors.any?
+            #error_explanation
+              p = "#{pluralize(@item.errors.count, "error")} prohibited this item from being saved:"
+              ul
+                - @item.errors.full_messages.each do |message|
+                  li = message
+
+          .form-group
+            p.col-form-label-lg Name
+            = f.text_field :name, class: 'form-control'
+
+          .form-group
+            p.col-form-label-lg Select Category
+            = f.select :category_id, Category.all.map {|category| [category.name, category.id]},
+                    {},  { class: 'selectpicker form-control', title: 'Choose one of the following' }
+
+
+          = f.submit 'Save', class: 'btn btn-primary btn-block btn-lg'
+
+
+      .panel-footer.justify-content-center
+        p
+          = link_to 'Back', category_items_path(@category)
+

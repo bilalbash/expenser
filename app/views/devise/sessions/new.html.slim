@@ -4,8 +4,8 @@
 .text-center
   h1 Sign in
 
-.row.justify-content-center
-  .col-lg-6.col-md-8.col-sm-10.col-xs-12
+.row
+  .col-lg-6.col-lg-offset-3.col-md-8.col-sm-10.col-xs-12
     .panel.panel-default
       .panel-body
         = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f|
@@ -16,21 +16,22 @@
             - if devise_mapping.registerable?
               = link_to 'Sign up', new_registration_path(resource_name), class: 'pull-right'
 
-            = f.label :email
+            p.col-form-label-lg.pull-left Email
             = f.email_field :email, :autofocus => true, class: 'form-control form-control-lg'
 
           .form-group
             - if devise_mapping.recoverable?
               = link_to "Forgot password?", new_password_path(resource_name), class: 'pull-right'
 
-            = f.label :password
+            p.col-form-label-lg.pull-left Password
             = f.password_field :password, class: 'form-control form-control-lg'
 
           - if devise_mapping.rememberable?
-            .form-check.row
-              label.form-check-label
-                = f.check_box :remember_me
+            .form-group
 
-              | Remember me
+              .checkbox
+                label
+                  = f.check_box :remember_me
+                  | Remember me
 
           = f.submit 'Sign in', :class => 'btn btn-primary btn-block btn-lg'
