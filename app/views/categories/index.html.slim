@@ -19,8 +19,10 @@ table.table.table-sm
           = ' | '
           = link_to 'Destroy', category, data: { confirm: 'Are you sure?' }, method: :delete
           = ' | '
-          = link_to 'Items', category_items_path(category)
+          = link_to 'Items', items_path(category_id: category.id)
 
 br
 
 = link_to 'New Category', new_category_path
+= ' | '
+= link_to 'New Item', new_item_path

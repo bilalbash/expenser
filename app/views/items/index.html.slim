@@ -4,7 +4,7 @@ table.table.table-sm
   thead
     tr
       th Name
-      th References
+      th Category
       th Actions
 
 
@@ -14,12 +14,12 @@ table.table.table-sm
         td = item.name
         td = item.category.name
         td
-          = link_to 'Show', category_item_path(@category, item)
+          = link_to 'Show', item_path(item)
           = ' | '
-          = link_to 'Edit', edit_category_item_path(@category, item)
+          = link_to 'Edit', edit_item_path(item)
           = ' | '
-          = link_to 'Destroy', [@category, item], data: { confirm: 'Are you sure?' }, method: :delete
+          = link_to 'Destroy', item, data: { confirm: 'Are you sure?' }, method: :delete
 
 br
 
-= link_to 'New Item', new_category_item_path(@category)
+= link_to 'New Item', new_item_path

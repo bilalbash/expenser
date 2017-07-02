@@ -1,0 +1,27 @@
+p#notice = notice
+
+p
+  strong Price:
+  = @line_item.price
+p
+  strong Item name:
+  = @line_item.item_name
+p
+  strong Category name:
+  = @line_item.category_name
+p
+  strong Category:
+  = @line_item.category
+p
+  strong Item:
+  = @line_item.item
+p
+  strong Quantity type:
+  = @line_item.quantity_type
+p
+  strong Quantity count:
+  = @line_item.quantity_count
+
+= link_to 'Edit', edit_line_item_path(@line_item)
+'  |
+= link_to 'Back', line_items_path

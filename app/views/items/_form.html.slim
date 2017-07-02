@@ -6,7 +6,7 @@
     .panel.panel-default
       .panel-body
 
-        = form_for [@category, @item] do |f|
+        = form_for @item do |f|
           - if @item.errors.any?
             #error_explanation
               p = "#{pluralize(@item.errors.count, "error")} prohibited this item from being saved:"
@@ -16,7 +16,7 @@
 
           .form-group
             p.col-form-label-lg Name
-            = f.text_field :name, class: 'form-control'
+            = f.text_field :name, autofocus: true, placeholder: 'Item name please', class: 'form-control'
 
           .form-group
             p.col-form-label-lg Select Category
@@ -29,5 +29,5 @@
 
       .panel-footer.justify-content-center
         p
-          = link_to 'Back', category_items_path(@category)
+          = link_to 'Back', items_path
 

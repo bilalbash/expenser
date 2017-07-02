@@ -1,0 +1,33 @@
+h1 Listing line_items
+
+table
+  thead
+    tr
+      th Price
+      th Item name
+      th Category name
+      th Category
+      th Item
+      th Quantity type
+      th Quantity count
+      th
+      th
+      th
+
+  tbody
+    - @line_items.each do |line_item|
+      tr
+        td = line_item.price
+        td = line_item.item_name
+        td = line_item.category_name
+        td = line_item.category
+        td = line_item.item
+        td = line_item.quantity_type
+        td = line_item.quantity_count
+        td = link_to 'Show', line_item
+        td = link_to 'Edit', edit_line_item_path(line_item)
+        td = link_to 'Destroy', line_item, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Line item', new_line_item_path

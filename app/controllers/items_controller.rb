@@ -5,7 +5,11 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    @items = Item.all
+    if params[:category_id]
+      @items = @category.items
+    else
+      @items = Item.all
+    end
   end
 
   # GET /items/1
@@ -29,7 +33,7 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
       if @item.save
-        format.html { redirect_to @item, notice: 'Item was successfully created.' }
+        format.html { redirect_to items_url, notice: 'Item was successfully created.' }
         format.json { render :show, status: :created, location: @item }
       else
         format.html { render :new }
@@ -69,7 +73,7 @@ class ItemsController < ApplicationController
     end
 
     def find_category
-      @category = Category.find(params[:category_id])
+      @category = Category.find(params[:category_id]) if params[:category_id]
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
