@@ -27,5 +27,8 @@
 
       .panel-footer.justify-content-center
         p
-          = link_to 'Back', items_path
+          - if @category
+            = link_to 'Back', items_path(category_id: @category)
+          - else
+            = link_to 'Back', items_path
 

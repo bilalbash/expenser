@@ -1,9 +1,22 @@
-h1= @category ? "#{@category.name.capitalize} Items" : 'Items'
+- content_for :extra_buttons do
+  - if @category
+    = link_to "<i class=\"i-test-css pe-7s-plus\"></i>Add Item to #{@category.name.capitalize}".html_safe,
+            new_item_path(category_id: @category.id), class: 'btn btn-default small-margin-right'
+  - else
+    = link_to '<i class="i-test-css pe-7s-plus"></i>Add Item'.html_safe, new_item_path,
+            class: 'btn btn-default small-margin-right'
 
 - content_for :top_left do
-  form.ajaxFormItems.form-inline action="/items" method="GET"
-    .form-group
-      input.ajaxFormItemsName type="text" class="form-control" name="name" id="name" placeholder="Search Item"
+  form.form-inline action="/items" method="GET"
+    .form-group.small-margin-right
+      - if @category.present?
+        input.hidden id="category_id" name="category_id" value="#{@category.id}"
+      input type="text" class="form-control" name="name" id="name" placeholder="Search Item"
+    a type="submit" class="btn btn-default"
+      i class="i-test-css pe-7s-search"
+      | Search
+
+h1= @category ? "#{@category.name.capitalize} Items" : 'Items'
 
 table.table.table-sm
   thead
@@ -13,22 +26,22 @@ table.table.table-sm
       th Expense
       th Actions
 
-
   tbody
     - @items.each do |item|
       tr
-        td = item.name
-        td = item.category.name
+        td = link_to item.name.capitalize, item_line_items_path(item)
+        td = link_to item.category.name.capitalize, items_path(category_id: item.category.id)
         td = item.expense
         td
           = link_to 'Edit', edit_item_path(item)
           = ' | '
           = link_to 'Destroy', item, data: { confirm: 'Are you sure?' }, method: :delete
           = ' | '
-          = link_to 'Purchases', item_line_items_path(item)
+          = link_to 'Expenses List', item_line_items_path(item)
           = ' | '
-          = link_to 'Add new purchase', new_item_line_item_path(item)
+          = link_to 'Add new Expense', new_item_line_item_path(item)
 
-br
-
-= link_to 'Add Item', new_item_path
+- if @category
+  = link_to "Add Item to #{@category.name.capitalize}", new_item_path(category_id: @category.id)
+- else
+  = link_to 'Add Item', new_item_path

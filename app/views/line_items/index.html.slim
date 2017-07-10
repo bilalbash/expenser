@@ -1,10 +1,12 @@
-h1= "#{@item.name.capitalize} purchases list"
+- content_for :extra_buttons do
+  = link_to "Add new expense to #{@item.name.capitalize}", new_item_line_item_path(@item), class: 'btn btn-default small-margin-right'
+
+h1= "\"#{@item.name.capitalize}\" expense list"
 
 table.table.table-sm
   thead
     tr
       th Price
-      th Item
       th Category
       th Purchase Date
       th Purchase Month
@@ -17,7 +19,6 @@ table.table.table-sm
     - @line_items.each do |line_item|
       tr
         td = line_item.price
-        td = line_item.item.name
         td = line_item.category.name
         td = line_item.purchase_date.strftime('%d-%m-%Y')
         td = line_item.purchase_month
@@ -30,6 +31,4 @@ table.table.table-sm
 
   br
 
-= link_to 'Items', items_path(category_id: @item.category_id)
-= ' | '
-= link_to 'New Line item', new_item_line_item_path(@item)
+= link_to "Back to \"#{@item.category.name.capitalize}\" Items", items_path(category_id: @item.category_id)

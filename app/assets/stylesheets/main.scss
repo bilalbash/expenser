@@ -35,16 +35,33 @@ label {
 }
 
 a.nav-link {
-
   padding-left: 2rem !important;
   i {
-    font-size: 28px;
+    font-size: 26px;
     float: left;
-    margin-right: 11px;
-    line-height: 23px;
+    margin-right: 8px;
+    line-height: 19px;
     font-weight: bold;
-  }
 
+  }
+}
+
+.i-test-css {
+  font-size: 24px;
+  float: left;
+  margin-right: 11px;
+  line-height: 20px;
+  font-weight: bold;
+}
+
+.navbar-brand {
+  font-size: 26px;
+  i {
+    font-size: 36px;
+    float: left;
+    margin-right: 7px;
+    line-height: 20px;
+  }
 }
 
 .form-group {

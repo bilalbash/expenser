@@ -19,7 +19,6 @@ class ItemsController < ApplicationController
 
     @items =  @items.left_outer_joins(:line_items).distinct.select('items.*, SUM(line_items.price) AS expense').
         group('items.id')
-
   end
 
   # GET /items/1
@@ -29,7 +28,7 @@ class ItemsController < ApplicationController
 
   # GET /items/new
   def new
-    @item = Item.new
+    @item = @category.items.new
   end
 
   # GET /items/1/edit

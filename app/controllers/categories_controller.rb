@@ -12,8 +12,6 @@ class CategoriesController < ApplicationController
     else
       if current_user.current_month.present?
         @categories = @categories.where('line_items.purchase_month = ?', current_user.current_month)
-      else
-        raise "current month can't be blank"
       end
     end
 

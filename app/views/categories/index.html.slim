@@ -1,16 +1,16 @@
 - content_for :top_left do
   p.lead
     - if current_user.current_month.present?
-      strong= "Total expense for the month of #{Date::MONTHNAMES[current_user.current_month.to_i]}: "
+      = "Total expense for the month of #{Date::MONTHNAMES[current_user.current_month.to_i]}: "
     - else
-      strong= "error #{current_user.current_month.inspect}: "
+      = "error #{current_user.current_month.inspect}: "
 
-    = @categories.map(&:expense).sum
+    span.text-success= @categories.map(&:expense).sum
 
 - content_for :extra_buttons do
-  = link_to 'Add Category', new_category_path, class: 'btn btn-success small-margin-right'
+  = link_to icon_with(:add, '', 'Add Category'), new_category_path, class: 'btn btn-success small-margin-right'
 
-h1 Listing categories
+h2 Categories
 
 table.table.table-sm
   thead
@@ -25,8 +25,6 @@ table.table.table-sm
         td = link_to category.name.capitalize, items_path(category_id: category.id)
         td = category.expense
         td
-          = link_to 'Edit', edit_category_path(category)
-          = ' | '
-          = link_to 'Destroy', category, data: { confirm: 'Are you sure?' }, method: :delete
-          = ' | '
-          = link_to 'Items', items_path(category_id: category.id)
+          = link_to icon_with(:edit, '', ''), edit_category_path(category)
+          = link_to icon_with(:list, '', ''), items_path(category_id: category.id), class: 'text-success'
+          = link_to icon_with(:destroy, '', ''), category, data: { confirm: 'Are you sure?' }, method: :delete, class: 'text-danger'

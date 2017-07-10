@@ -9,8 +9,9 @@ document.addEventListener 'turbolinks:load', () ->
   $('input', '#datepickerEvent').on 'click', ()->
     $('.glyphicon.glyphicon-calendar').click()
 
-
-  console.log('im dsadas')
   $('.ajaxFormItems').on 'submit', (e)->
     e.stopPropagation()
-    console.log('im changed')
+
+  $('.avoidSubmit').on 'click', (e) ->
+    e.stopPropagation()
+    $('#collapseExample').collapse('toggle')
