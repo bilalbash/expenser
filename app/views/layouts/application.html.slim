@@ -19,6 +19,7 @@ html
       == render 'layouts/navigation'
     main[role="main"]
       .container
-        == render 'layouts/calculator'
+        - if current_user.present?
+          == render 'layouts/calculator'
         == render 'layouts/messages'
         == yield

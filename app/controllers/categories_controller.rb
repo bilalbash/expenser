@@ -6,7 +6,16 @@ class CategoriesController < ApplicationController
   def index
     @categories = Category.includes(:line_items)
 
-    @categories = @categories.where('line_items.purchase_month = ?', params[:keyword]) if params[:keyword]
+    if params[:month]
+      current_user.update!(current_month: Date::MONTHNAMES.index(params[:month]).to_s)
+      @categories = @categories.where('line_items.purchase_month = ?', Date::MONTHNAMES.index(params[:month]).to_s)
+    else
+      if current_user.current_month.present?
+        @categories = @categories.where('line_items.purchase_month = ?', current_user.current_month)
+      else
+        raise "current month can't be blank"
+      end
+    end
 
     @categories =  @categories.left_outer_joins(:line_items).distinct.
         select('categories.*, SUM(line_items.price) AS expense').group('categories.id')

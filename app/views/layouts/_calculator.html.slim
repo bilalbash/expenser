@@ -1,26 +1,31 @@
 .row
   .col-lg-6
-    = yield :item_search
+    = yield :top_left
 
-  .col-lg-6
-    .text-right.collapseButton
+  .col-lg-6.text-right
+    .collapseButton
       = yield :extra_buttons
-      button.btn.btn-primary data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" Calculator
-
+      button.btn.btn-primary data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" Settings
 
     .row.collapse#collapseExample
 
-      .row.justify-content-right
-        .col-lg-6.col-lg-offset-6
-          form get='/index'
-            .form-group
-              select class="selectpicker2 form-control" name="keyword"
-                option value="0" selected="selected" Select Month
-                - Date::MONTHNAMES.map do |name|
-                  - if name
-                    option value="#{Date::MONTHNAMES.index(name)}" = name
 
-            button type="submit" class="btn btn-primary btn-block" Calculate
+      .col-lg-6.col-lg-offset-6
+        form get='/index'
+          .form-group
+            select class="selectpicker2 form-control" name="month"
+              - if current_user.current_month.present?
+                option value="0" selected="selected" Change Month
+              - else
+                option value="0" selected="selected" Select Month
+
+              - Date::MONTHNAMES.map do |name|
+                - if name
+                  option value="#{name}" = name
+
+          .text-right
+            button type="submit" class="btn btn-primary small-margin-right" Change
+            button type="submit" class="btn btn-danger" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" Close
 
 /button.btn.btn-default role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" Calculator
 /div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"

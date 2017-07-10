@@ -1,22 +1,28 @@
-h1 Listing categories
+- content_for :top_left do
+  p.lead
+    - if current_user.current_month.present?
+      strong= "Total expense for the month of #{Date::MONTHNAMES[current_user.current_month.to_i]}: "
+    - else
+      strong= "error #{current_user.current_month.inspect}: "
+
+    = @categories.map(&:expense).sum
 
 - content_for :extra_buttons do
   = link_to 'Add Category', new_category_path, class: 'btn btn-success small-margin-right'
 
+h1 Listing categories
 
 table.table.table-sm
-
   thead
     tr
       th Name
       th Expense
       th Actions
 
-
   tbody
     - @categories.each do |category|
       tr
-        td = category.name
+        td = link_to category.name.capitalize, items_path(category_id: category.id)
         td = category.expense
         td
           = link_to 'Edit', edit_category_path(category)
@@ -24,7 +30,3 @@ table.table.table-sm
           = link_to 'Destroy', category, data: { confirm: 'Are you sure?' }, method: :delete
           = ' | '
           = link_to 'Items', items_path(category_id: category.id)
-    tr
-      td Total
-      td = @categories.map(&:expense).sum
-      td
