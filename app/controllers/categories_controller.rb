@@ -4,7 +4,12 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.json
   def index
-    @categories = Category.all
+    @categories = Category.includes(:line_items)
+
+    @categories = @categories.where('line_items.purchase_month = ?', params[:keyword]) if params[:keyword]
+
+    @categories =  @categories.left_outer_joins(:line_items).distinct.
+        select('categories.*, SUM(line_items.price) AS expense').group('categories.id')
   end
 
   # GET /categories/1
@@ -42,7 +47,7 @@ class CategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @category.update(category_params)
-        format.html { redirect_to @category, notice: 'Category was successfully updated.' }
+        format.html { redirect_to categories_url, notice: 'Category was successfully updated.' }
         format.json { render :show, status: :ok, location: @category }
       else
         format.html { render :edit }

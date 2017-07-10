@@ -9,7 +9,7 @@
         = form_for @item do |f|
           - if @item.errors.any?
             #error_explanation
-              p = "#{pluralize(@item.errors.count, "error")} prohibited this item from being saved:"
+              p= "#{pluralize(@item.errors.count, "error")} prohibited this item from being saved:"
               ul
                 - @item.errors.full_messages.each do |message|
                   li = message
@@ -21,11 +21,9 @@
           .form-group
             p.col-form-label-lg Select Category
             = f.select :category_id, Category.all.map {|category| [category.name, category.id]},
-                    {},  { class: 'selectpicker form-control', title: 'Choose one of the following' }
-
+                    {},  { class: 'selectpicker1 form-control', title: 'Choose one of the following' }
 
           = f.submit 'Save', class: 'btn btn-primary btn-block btn-lg'
-
 
       .panel-footer.justify-content-center
         p

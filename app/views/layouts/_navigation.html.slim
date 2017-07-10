@@ -16,10 +16,6 @@ nav.navbar.navbar-default.navbar-fixed-top
             = link_to 'Categories', categories_path, class: 'nav-link'
           li
             = link_to 'Items', items_path, class: 'nav-link'
-          li
-            = link_to icon_with(:about), page_path(:about), class: 'nav-link'
-          li
-            = link_to 'Edit account', edit_user_registration_path, class: 'nav-link'
 
         - else
           li
@@ -31,5 +27,7 @@ nav.navbar.navbar-default.navbar-fixed-top
 
       ul.nav.navbar-nav.navbar-right
         - if user_signed_in?
+          li
+            = link_to 'Edit account', edit_user_registration_path, class: 'nav-link'
           li
             = link_to 'Sign out', destroy_user_session_path, :method => 'delete'

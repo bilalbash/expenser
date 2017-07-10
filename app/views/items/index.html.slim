@@ -1,10 +1,16 @@
-h1 Listing items
+h1 Items
+
+- content_for :item_search do
+  form.ajaxFormItems.form-inline action="/items" method="GET"
+    .form-group
+      input.ajaxFormItemsName type="text" class="form-control" name="name" id="name" placeholder="Search Item"
 
 table.table.table-sm
   thead
     tr
       th Name
       th Category
+      th Expense
       th Actions
 
 
@@ -13,13 +19,16 @@ table.table.table-sm
       tr
         td = item.name
         td = item.category.name
+        td = item.expense
         td
-          = link_to 'Show', item_path(item)
-          = ' | '
           = link_to 'Edit', edit_item_path(item)
           = ' | '
           = link_to 'Destroy', item, data: { confirm: 'Are you sure?' }, method: :delete
+          = ' | '
+          = link_to 'Purchases', item_line_items_path(item)
+          = ' | '
+          = link_to 'Add new purchase', new_item_line_item_path(item)
 
 br
 
-= link_to 'New Item', new_item_path
+= link_to 'Add Item', new_item_path

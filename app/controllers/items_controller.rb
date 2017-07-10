@@ -6,10 +6,20 @@ class ItemsController < ApplicationController
   # GET /items.json
   def index
     if params[:category_id]
-      @items = @category.items
+      @items = @category.items.includes(:line_items)
     else
-      @items = Item.all
+      @items = Item.includes(:line_items)
     end
+
+    @items = @items.where('line_items.purchase_month = ?', params[:keyword]) if params[:keyword]
+
+    @items = @items.where('items.name LIKE ? or line_items.category_name LIKE ?', "%#{params[:name]}%", "%#{params[:name]}%") if params[:name]
+
+    User.where(email: current_user.email)[0].update_attributes!(current_month: params[:month]) if current_user if params[:month]
+
+    @items =  @items.left_outer_joins(:line_items).distinct.select('items.*, SUM(line_items.price) AS expense').
+        group('items.id')
+
   end
 
   # GET /items/1
@@ -33,7 +43,7 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
       if @item.save
-        format.html { redirect_to items_url, notice: 'Item was successfully created.' }
+        format.html { redirect_to items_url(category_id: @item.category_id), notice: 'Item was successfully created.' }
         format.json { render :show, status: :created, location: @item }
       else
         format.html { render :new }
@@ -47,7 +57,7 @@ class ItemsController < ApplicationController
   def update
     respond_to do |format|
       if @item.update(item_params)
-        format.html { redirect_to @item, notice: 'Item was successfully updated.' }
+        format.html { redirect_to items_url(category_id: @item.category_id), notice: 'Item was successfully updated.' }
         format.json { render :show, status: :ok, location: @item }
       else
         format.html { render :edit }

@@ -1,30 +1,50 @@
-= form_for @line_item do |f|
-  - if @line_item.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@line_item.errors.count, "error")} prohibited this line_item from being saved:"
-      ul
-        - @line_item.errors.full_messages.each do |message|
-          li = message
+= content_for :title do
+  = 'New line item'
 
-  .field
-    = f.label :price
-    = f.number_field :price
-  .field
-    = f.label :item_name
-    = f.text_field :item_name
-  .field
-    = f.label :category_name
-    = f.text_field :category_name
-  .field
-    = f.label :category
-    = f.text_field :category
-  .field
-    = f.label :item
-    = f.text_field :item
-  .field
-    = f.label :quantity_type
-    = f.text_field :quantity_type
-  .field
-    = f.label :quantity_count
-    = f.text_field :quantity_count
-  .actions = f.submit
+.row.justify-content-center
+  .col-lg-6.col-lg-offset-3.col-md-8.col-sm-10.col-xs-12
+    .panel.panel-default
+      .panel-body
+
+        = form_for [@item, @line_item] do |f|
+          - if @line_item.errors.any?
+            #error_explanation
+              p= "#{pluralize(@line_item.errors.count, "error")} prohibited this line_item from being saved:"
+              ul
+                - @line_item.errors.full_messages.each do |message|
+                  li = message
+
+          .form-group
+            p.col-form-label-lg
+              | Price
+              small.text-muted= ' (in ruppees)'
+            = f.number_field :price, autofocus: true, placeholder: 'Enter price paid', class: 'form-control'
+          
+          
+          .form-group
+            p.col-form-label-lg Item Name
+            p class="form-control-static" = @item.name
+            = f.hidden_field :item_name, value: @item.name
+
+          .form-group
+            p.col-form-label-lg Category Name
+            p class="form-control-static" = @item.category.name
+            = f.hidden_field :category_name, value: @item.category.name
+
+          = f.hidden_field :category_id, value: @item.category.id
+          = f.hidden_field :item_id, value: @item.id
+
+          .form-group#datepickerEvent
+            p.col-form-label-lg Purchase Date
+            .input-group.date#datetimepicker data-date="#{@line_item.purchase_date.try(:strftime, '%d-%m-%Y') || \
+                (DateTime.now - 1.month).strftime('%d-%m-%Y')}"
+              = f.date_field :purchase_date, placeholder: 'Select date of purchase', class: 'form-control',
+                      value: @line_item.purchase_date.try(:strftime, '%d-%m-%Y') || (DateTime.now - 1.month).strftime('%d-%m-%Y')
+              span.input-group-addon
+                span.glyphicon.glyphicon-calendar
+
+          = f.submit 'Save', class: 'btn btn-success btn-block'
+
+      .panel-footer.justify-content-center
+        p
+          = link_to 'Back', items_path(@item)
