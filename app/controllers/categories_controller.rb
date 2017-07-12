@@ -4,19 +4,26 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.json
   def index
-    @categories = Category.includes(:line_items)
+    # @categories = Category.includes(:line_items)
 
     if params[:month]
       current_user.update!(current_month: Date::MONTHNAMES.index(params[:month]).to_s)
-      @categories = @categories.where('line_items.purchase_month = ?', Date::MONTHNAMES.index(params[:month]).to_s)
-    else
-      if current_user.current_month.present?
-        @categories = @categories.where('line_items.purchase_month = ?', current_user.current_month)
-      end
+      # @categories = @categories.where('line_items.purchase_month = ?', Date::MONTHNAMES.index(params[:month]).to_s)
+      # @month = current_user.current_month
+    elsif current_user.current_month.blank?
+      # @categories = @categories.where('line_items.purchase_month = ?', current_user.current_month)
+      current_user.update!(current_month: DateTime.now.month.to_s)
     end
+    @month = current_user.current_month
 
-    @categories =  @categories.left_outer_joins(:line_items).distinct.
-        select('categories.*, SUM(line_items.price) AS expense').group('categories.id')
+    @categories =  Category.
+        joins(:line_items).
+        select('categories.*, SUM(line_items.price) AS expense').
+        where('line_items.purchase_month = ?', @month).
+        group('categories.id')
+
+    @others = Category.all - @categories
+    # @all_categories = Category.includes(:line_items)
   end
 
   # GET /categories/1
@@ -43,7 +50,6 @@ class CategoriesController < ApplicationController
         format.html { redirect_to categories_url, notice: 'Category was successfully created.' }
         format.json { render :show, status: :created, location: @category }
       else
-        format.html { render :new }
         format.json { render json: @category.errors, status: :unprocessable_entity }
       end
     end

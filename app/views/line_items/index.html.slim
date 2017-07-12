@@ -6,29 +6,36 @@ h1= "\"#{@item.name.capitalize}\" expense list"
 table.table.table-sm
   thead
     tr
-      th Price
+      th Item
       th Category
+      th Expense
       th Purchase Date
       th Purchase Month
       th Purchase Week
-
       th Actions
 
 
   tbody
     - @line_items.each do |line_item|
       tr
+        td = line_item.item_name
+        td = line_item.category_name
         td = line_item.price
-        td = line_item.category.name
         td = line_item.purchase_date.strftime('%d-%m-%Y')
         td = line_item.purchase_month
         td = line_item.purchase_week
-
         td
           = link_to 'Edit', edit_item_line_item_path(@item, line_item)
           = ' | '
           = link_to 'Destroy', [@item, line_item], data: { confirm: 'Are you sure?' }, method: :delete
+    tr
+      th
+      th.text-right Total Expense
+      th
+      th
+      th
+      th
+      th
 
-  br
 
 = link_to "Back to \"#{@item.category.name.capitalize}\" Items", items_path(category_id: @item.category_id)

@@ -4,5 +4,5 @@ class Category < ApplicationRecord
   has_many :line_items
   belongs_to :parent, class_name: 'Category', required: false
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
 end

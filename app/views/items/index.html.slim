@@ -40,6 +40,11 @@ table.table.table-sm
           = link_to 'Expenses List', item_line_items_path(item)
           = ' | '
           = link_to 'Add new Expense', new_item_line_item_path(item)
+    tr
+      th
+      th.text-right Total Expense
+      th
+      th
 
 - if @category
   = link_to "Add Item to #{@category.name.capitalize}", new_item_path(category_id: @category.id)

@@ -16,6 +16,7 @@ module ApplicationHelper
       when :edit then "<i class='i-test-css pe-7s-note'></i>#{open_tag + help_text + close_tag}".html_safe
       when :destroy then "<i class='i-test-css pe-7s-less'></i>#{open_tag + help_text + close_tag}".html_safe
       when :list then "<i class='i-test-css pe-7s-news-paper'></i>#{open_tag + help_text + close_tag}".html_safe
+      when :save then "<i class='i-test-css pe-7s-check'></i>#{open_tag + help_text + close_tag}".html_safe
       else 'Jazz'
     end
   end
